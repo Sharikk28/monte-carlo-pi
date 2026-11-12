@@ -83,6 +83,11 @@ def run(task):
 
 def main():
     query("DELETE FROM workers WHERE name = %s", (WORKER_NAME,))
+    query(
+        "UPDATE tasks SET status = 'queued', stage = 'Повернено в чергу', progress = 0, "
+        "worker = NULL, started_at = NULL WHERE status = 'running' AND worker = %s",
+        (WORKER_NAME,),
+    )
     print(f"{WORKER_NAME}: запущено")
     while not heartbeat():
         task = take_task()

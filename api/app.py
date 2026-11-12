@@ -1,3 +1,4 @@
+import math
 import os
 import random
 
@@ -42,6 +43,11 @@ def error(message, code):
     return jsonify({"error": message}), code
 
 
+def read_body():
+    data = request.get_json(silent=True)
+    return data if isinstance(data, dict) else {}
+
+
 def remember(user):
     session["user_id"] = user["id"]
     session["username"] = user["username"]
@@ -80,7 +86,7 @@ def add_wait(tasks):
     for task in tasks:
         if task["status"] == "queued":
             ahead = max(task["position"] - workers["idle"], 0)
-            task["eta_seconds"] = round(ahead * average / max(workers["total"], 1))
+            task["eta_seconds"] = math.ceil(ahead * average / max(workers["total"], 1))
         else:
             task["position"] = None
             task["eta_seconds"] = None
@@ -91,9 +97,15 @@ def add_wait(tasks):
 def check_access():
     if request.path in PUBLIC_PATHS:
         return None
-    if "user_id" not in session:
+    user = query(
+        "SELECT is_admin FROM users WHERE id = %s AND username = %s",
+        (session.get("user_id"), session.get("username")),
+        one=True,
+    )
+    if user is None:
+        session.clear()
         return error("Потрібно увійти", 401)
-    if request.path.startswith("/api/admin") and not session["is_admin"]:
+    if request.path.startswith("/api/admin") and not user["is_admin"]:
         return error("Доступ лише для адміністратора", 403)
     return None
 
@@ -106,7 +118,7 @@ def add_server_name(response):
 
 @app.post("/api/register")
 def register():
-    data = request.get_json(silent=True) or {}
+    data = read_body()
     username = str(data.get("username", "")).strip()
     password = str(data.get("password", ""))
     if not username.isalnum() or len(username) < 3 or len(username) > 30:
@@ -127,7 +139,7 @@ def register():
 
 @app.post("/api/login")
 def login():
-    data = request.get_json(silent=True) or {}
+    data = read_body()
     username = str(data.get("username", "")).strip()
     password = str(data.get("password", ""))
     user = query(
@@ -154,7 +166,7 @@ def me():
 
 @app.post("/api/tasks")
 def create_task():
-    data = request.get_json(silent=True) or {}
+    data = read_body()
     points = data.get("points")
     seed = data.get("seed")
     if type(points) is not int or points < MIN_POINTS or points > MAX_POINTS:

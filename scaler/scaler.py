@@ -1,4 +1,6 @@
 import os
+import signal
+import sys
 import time
 
 import docker
@@ -81,9 +83,20 @@ def scale_down():
         print(f"scaler: {worker['name']} простоює понад {IDLE_SECONDS} с, зупиняю")
 
 
-def main():
+def remove_auto_workers():
     for container in auto_containers():
         container.remove(force=True)
+
+
+def shutdown(number, frame):
+    remove_auto_workers()
+    print("scaler: зупинено, автоматичні сервери видалено")
+    sys.exit(0)
+
+
+def main():
+    signal.signal(signal.SIGTERM, shutdown)
+    remove_auto_workers()
     print("scaler: запущено")
     while True:
         try:

@@ -5,7 +5,7 @@ import psycopg2.extras
 
 
 def query(sql, params=(), one=False):
-    connection = psycopg2.connect(os.environ["DATABASE_URL"])
+    connection = psycopg2.connect(os.environ["DATABASE_URL"], connect_timeout=5)
     try:
         with connection:
             with connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
