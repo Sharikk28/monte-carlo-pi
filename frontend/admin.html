@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Адмін-панель</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Адмін-панель: навантаження на систему</h1>
+    <p><a href="index.html">До задач</a></p>
+
+    <h2>Стан системи</h2>
+    <p id="summary"></p>
+
+    <h2>Сервери обчислень</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Сервер</th>
+                <th>Стан</th>
+                <th>Задача</th>
+                <th>У цьому стані, с</th>
+                <th>Останній сигнал, с тому</th>
+                <th>Виконано задач</th>
+            </tr>
+        </thead>
+        <tbody id="workers"></tbody>
+    </table>
+
+    <h2>Активні задачі всіх користувачів</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Користувач</th>
+                <th>Точок</th>
+                <th>Статус</th>
+                <th>Прогрес</th>
+                <th>Етап</th>
+                <th>Сервер</th>
+                <th>Час, с</th>
+            </tr>
+        </thead>
+        <tbody id="tasks"></tbody>
+    </table>
+
+    <p id="message"></p>
+    <footer>Відповів сервер: <b id="server">—</b></footer>
+
+    <script src="common.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

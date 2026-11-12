@@ -1,0 +1,66 @@
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+    color: #1f2933;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #cbd2d9;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #f0f4f8;
+}
+
+input, button {
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+progress {
+    width: 110px;
+    vertical-align: middle;
+}
+
+.hint {
+    color: #627d98;
+    font-size: 13px;
+}
+
+.done {
+    color: #18794e;
+}
+
+.running, .busy {
+    color: #0b69a3;
+}
+
+.queued {
+    color: #b7791f;
+}
+
+.cancelled, .timeout, .failed {
+    color: #c53030;
+}
+
+#message {
+    color: #c53030;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+footer {
+    margin-top: 24px;
+    color: #627d98;
+    font-size: 13px;
+}

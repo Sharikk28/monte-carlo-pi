@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Обчислення π методом Монте-Карло</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Обчислення числа π методом Монте-Карло</h1>
+
+    <section id="auth" hidden>
+        <h2>Вхід</h2>
+        <input id="username" placeholder="Логін" autocomplete="username">
+        <input id="password" type="password" placeholder="Пароль" autocomplete="current-password">
+        <button id="login">Увійти</button>
+        <button id="register">Зареєструватись</button>
+    </section>
+
+    <section id="app" hidden>
+        <p>
+            Користувач: <b id="who"></b>
+            <a id="adminLink" href="admin.html" hidden>Адмін-панель</a>
+            <button id="logout">Вийти</button>
+        </p>
+
+        <h2>Нова задача</h2>
+        <label>Кількість точок: <input id="points" type="number" value="20000000"></label>
+        <button id="start">Запустити</button>
+        <p id="limits" class="hint"></p>
+
+        <h2>Мої задачі</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Створено</th>
+                    <th>Точок</th>
+                    <th>Статус</th>
+                    <th>Прогрес</th>
+                    <th>Етап</th>
+                    <th>Сервер</th>
+                    <th>Час, с</th>
+                    <th>Результат</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tasks"></tbody>
+        </table>
+    </section>
+
+    <p id="message"></p>
+    <footer>Відповів сервер: <b id="server">—</b></footer>
+
+    <script src="common.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
